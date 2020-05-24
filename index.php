@@ -6,19 +6,103 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/base.css">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/officer.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,500,700&display=swap&subset=vietnamese" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<!--===============================================================================================-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<!--===============================================================================================-->
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<!--===============================================================================================-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+		<!--===============================================================================================-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+		<!--===============================================================================================-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script type="text/javascript" src="js/main.js"></script>
-		<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	rel="stylesheet"
-	/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script type="text/javascript">
+        //Phân Trang Cho Table
+        //<![CDATA[
+        function Pager(tableName, itemsPerPage) {
+            this.tableName = tableName;
+            this.itemsPerPage = itemsPerPage;
+            this.currentPage = 1;
+            this.pages = 0;
+            this.inited = false;
+
+            this.showRecords = function (from, to) {
+                var rows = document.getElementById(tableName).rows;
+                for (var i = 1; i < rows.length; i++) {
+                    if (i < from || i > to)
+                        rows[i].style.display = 'none';
+                    else
+                        rows[i].style.display = '';
+                }
+            }
+
+            this.showPage = function (pageNumber) {
+                if (!this.inited) {
+                    alert("not inited");
+                    return;
+                }
+                var oldPageAnchor = document.getElementById('pg' + this.currentPage);
+                oldPageAnchor.className = 'pg-normal';
+
+                this.currentPage = pageNumber;
+                var newPageAnchor = document.getElementById('pg' + this.currentPage);
+                newPageAnchor.className = 'pg-selected';
+
+                var from = (pageNumber - 1) * itemsPerPage + 1;
+                var to = from + itemsPerPage - 1;
+                this.showRecords(from, to);
+            }
+
+            this.prev = function () {
+                if (this.currentPage > 1)
+                    this.showPage(this.currentPage - 1);
+            }
+
+            this.next = function () {
+                if (this.currentPage < this.pages) {
+                    this.showPage(this.currentPage + 1);
+                }
+            }
+
+            this.init = function () {
+                var rows = document.getElementById(tableName).rows;
+                var records = (rows.length - 1);
+                this.pages = Math.ceil(records / itemsPerPage);
+                this.inited = true;
+            }
+            this.showPageNav = function (pagerName, positionId) {
+                if (!this.inited) {
+                    alert("not inited");
+                    return;
+                }
+                var element = document.getElementById(positionId);
+
+                var pagerHtml = '<span onclick="' + pagerName +
+                    '.prev();" class="pg-normal">&#171</span> | ';
+                for (var page = 1; page <= this.pages; page++)
+                    pagerHtml += '<span id="pg' + page + '" class="pg-normal" onclick="' + pagerName +
+                    '.showPage(' + page + ');">' + page + '</span> | ';
+                pagerHtml += '<span onclick="' + pagerName + '.next();" class="pg-normal">&#187;</span>';
+
+                element.innerHTML = pagerHtml;
+            }
+        }
+        //]]>
+    </script>
+		
 	</head>
 
-	<body>
+	<body onload="time()">
 		<!-- Tab -->
 		<div class="tab">
 		  	<button class="tablinks" id="first_tablinks">
@@ -60,97 +144,8 @@
 	  	<!-- Tab End -->
 
 	  	<!-- Nội dung của Ebus -->
-	  	<div id="Ebus">
-		<header>
-	<div
-		id="carouselExampleIndicators"
-		class="carousel slide"
-		data-ride="carousel"
-	>
-		<ol class="carousel-indicators">
-			<li
-				data-target="#carouselExampleIndicators"
-				data-slide-to="0"
-				class="active"
-			></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-		</ol>
-		<div class="carousel-inner" role="listbox">
-			<!-- Slide One - Set the background image for this slide in the line below -->
-			<div
-				class="carousel-item active"
-				style="
-					background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80https://unsplash.com/photos/6mcVaoGNz1w');
-				"
-			>
-				<div class="carousel-caption d-none d-md-block">
-					<h3 class="display-4">First Slide</h3>
-					<p class="lead">This is a description for the first slide.</p>
-				</div>
-			</div>
-			<!-- Slide Two - Set the background image for this slide in the line below -->
-			<div
-				class="carousel-item"
-				style="
-					background-image: url('https://images.unsplash.com/photo-1520105072000-f44fc083e508?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80https://source.unsplash.com/wfh8dDlNFOk/1920x1080');
-				"
-			>
-				<div class="carousel-caption d-none d-md-block">
-					<h3 class="display-4">Second Slide</h3>
-					<p class="lead">This is a description for the second slide.</p>
-				</div>
-			</div>
-			<!-- Slide Three - Set the background image for this slide in the line below -->
-			<div
-				class="carousel-item"
-				style="
-					background-image: url('https://images.unsplash.com/photo-1578634427572-83cf0bf3ae8d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
-				"
-			>
-				<div class="carousel-caption d-none d-md-block">
-					<h3 class="display-4">Third Slide</h3>
-					<p class="lead">This is a description for the third slide.</p>
-				</div>
-			</div>
-		</div>
-		<a
-			class="carousel-control-prev"
-			href="#carouselExampleIndicators"
-			role="button"
-			data-slide="prev"
-		>
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a
-			class="carousel-control-next"
-			href="#carouselExampleIndicators"
-			role="button"
-			data-slide="next"
-		>
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
-	</div>
-</header>
-<!-- Page Content -->
-<section class="py-5">
-	<div class="container">
-		<h1 class="font-weight-light"><strong> BusMap Là Gì?</strong></h1>
-		<h5 class="lead">
-			Xe buýt ngày càng trở thành phương tiện công cộng phổ biến, mọi
-			người được khuyến khích sử dụng xe buýt nhiều hơn vì độ an toàn và
-			thân thiện với môi trường. Ở TP. Hồ Chí Minh có hơn 100 tuyến xe
-			buýt khác nhau với hơn 2000 điểm dừng. Vì vậy việc di chuyển bằng xe
-			buýt trong các đô thị này là hết sức thuận tiện.<br />
-			<i
-				>Từ lí do đó, BusMap đã ra đời với mục đích sẽ giúp cho mọi người
-				đi xe buýt tốt hơn và thuận tiện hơn.
-			</i>
-		</h5>
-	</div>
-</section>
+	  	<div id="content">
+		
 	  		
 	  	</div>
 	  	<!--Ebus End -->
@@ -163,7 +158,373 @@
 
 	 	<!-- Officer -->
 		<div id="Officer" class="tabcontent">
-		
+			<div class="container-fluid al">
+				<div id="clock"></div>
+				<Br>
+				<p class="timkiemnhanvien"><b>TÌM KIẾM NHÂN VIÊN:</b></p><Br>
+				<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Nhập tên nhân viên cần tìm..."
+					data-toggle="tooltip" data-placement="bottom" title="Tìm Kiếm Nhân Viên">
+
+				<form action="">
+
+				</form>
+				<b>CHỨC NĂNG CHÍNH:</b><Br>
+				<button class="nv btn add-new" type="button" data-toggle="tooltip" data-placement="top"
+					title="Thêm Nhân Viên"><i class="fa fa-user-plus"></i></button>
+				<button class="nv" type="button" onclick="sortTable()" data-toggle="tooltip" data-placement="top"
+					title="Lọc Dữ Liệu"><i class="fa fa-filter"></i></button>
+				<button class="nv xuat" data-toggle="tooltip" data-placement="top" title="Xuất File"><i
+						class="fa fa-file"></i></button>
+				<button class="nv cog" data-toggle="tooltip" data-placement="bottom" title=""><i
+						class="fa fa-cogs"></i></button>
+				<div class="table-title">
+					<div class="row">
+
+					</div>
+				</div>
+
+				<table class="table table-bordered" id="myTable">
+					<thead>
+						<tr class="ex">
+							<th width="auto">Tên Nhân Viên</th>
+							<th width="auto">Giới Tính</th>
+							<th>Ngày Sinh</th>
+							<th>Địa Chỉ</th>                
+							<th>Chức Vụ</th>
+							<th width="5px; !important">Tính Năng</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Nguyen Duy Nam</td>
+							<td>Nam</td>
+							<td>28/09/1999</td>
+							<td>Thông Tin Bảo Mật</td>
+							<td>Admin</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Trần Khả Ái</td>
+							<td>Nữ</td>
+							<td>12/02/1999</td>
+							<td>155-157 Trần Quốc Thảo, Quận 3, Hồ Chí Minh</td>
+
+							<td>Phục Vụ</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Nguyễn Duy Tưởng</td>
+							<td>Nam</td>
+							<td>07/10/1999</td>
+							<td>6 Nguyễn Lương Bằng, Tân Phú, Quận 7, Hồ Chí Minh</td>
+
+							<td>Dịch Vụ</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sữa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Trần Trúc An</td>
+							<td>Nữ</td>
+							<td>22/12/1999</td>
+							<td>Số 3 Hòa Bình, Phường 3, Quận 11, Hồ Chí Minh</td>
+
+							<td>Phục Vụ</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Phạm Thu Cúc</td>
+							<td>Nữ</td>
+							<td>02/06/1998</td>
+							<td>19 Đường Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Hồ Chí Minh</td>
+
+							<td>Thu Ngân</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Nguyễn Thị Kim Ngân</td>
+							<td>Nữ</td>
+							<td>06/04/1998</td>
+							<td>Số 13, Tân Thuận Đông, Quận 7, Hồ Chí Minh</td>
+							<td>Phục Vụ</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Nguyễn Bá Thịnh</td>
+							<td>Nam</td>
+							<td>23/07/1999</td>
+							<td>59C Nguyễn Đình Chiểu, Quận 3, Hồ Chí Minh</td>
+							<td>Dịch Vụ</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Huỳnh Cẩm Thu</td>
+							<td>Nữ</td>
+							<td>19/01/1997</td>
+							<td>764 Võ Văn Kiệt, Phường 1, Quận 5, Hồ Chí Minh</td>
+							<td>Tư Vấn</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Nguyễn Xuân Ly</td>
+							<td>Nữ</td>
+							<td>30/10/1999</td>
+							<td>Đường Kênh T2 Ấp 6 Xã Hưng Long Huyện Bình Chánh, Hưng Long, Bình Chánh, Hồ Chí Minh</td>
+							<td>Tư Vấn</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Hoàng Xuân Nam</td>
+							<td>Nữ</td>
+							<td>20/7/1989</td>
+							<td>37 Vạn Tượng, Phường 13, Quận 5, Hồ Chí Minh</td>
+							<td>QL Kho</td>
+							<td>
+								<a class="add" title="Lưu Lại" data-toggle="tooltip"><i class="fa fa-floppy-o"
+										aria-hidden="true"></i></a>
+								<a class="edit" title="Sửa" data-toggle="tooltip"><i class="fa fa-pencil"
+										aria-hidden="true"></i></a>
+								<a class="delete" title="Xóa" data-toggle="tooltip"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+						<div id="pageNavPosition" class="text-right"></div>
+						<script type="text/javascript">
+							var pager = new Pager('myTable', 5);
+							pager.init();
+							pager.showPageNav('pager', 'pageNavPosition');
+							pager.showPage(1);
+						</script>
+					</div>
+			
+			<script src="jquery.min.js"></script>
+			<script type="text/javascript">
+			
+				//Lọc Dữ Liệu
+				function myFunction() {
+					var input, filter, table, tr, td, i, txtValue;
+					input = document.getElementById("myInput");
+					filter = input.value.toUpperCase();
+					table = document.getElementById("myTable");
+					tr = table.getElementsByTagName("tr");
+					for (i = 0; i < tr.length; i++) {
+						td = tr[i].getElementsByTagName("td")[0];
+						if (td) {
+							txtValue = td.textContent || td.innerText;
+							if (txtValue.toUpperCase().indexOf(filter) > -1) {
+								tr[i].style.display = "";
+							} else {
+								tr[i].style.display = "none";
+							}
+						}
+					}
+				}
+				//Lọc Table
+				function sortTable() {
+					var table, rows, switching, i, x, y, shouldSwitch;
+					table = document.getElementById("myTable");
+					switching = true;
+					while (switching) {
+						switching = false;
+						rows = table.rows;
+						for (i = 1; i < (rows.length - 1); i++) {
+							shouldSwitch = false;
+							x = rows[i].getElementsByTagName("TD")[0];
+							y = rows[i + 1].getElementsByTagName("TD")[0];
+							if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+								shouldSwitch = true;
+								break;
+							}
+						}
+						if (shouldSwitch) {
+							rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+							switching = true;
+							swal("Thành Công!", "Bạn Đã Lọc Thành Công", "success");
+						}
+					}
+				}
+				//Thời Gian
+				function time() {
+					var today = new Date();
+					var weekday = new Array(7);
+					weekday[0] = "Chủ Nhật";
+					weekday[1] = "Thứ Hai";
+					weekday[2] = "Thứ Ba";
+					weekday[3] = "Thứ Tư";
+					weekday[4] = "Thứ Năm";
+					weekday[5] = "Thứ Sáu";
+					weekday[6] = "Thứ Bảy";
+					var day = weekday[today.getDay()];
+					var dd = today.getDate();
+					var mm = today.getMonth() + 1;
+					var yyyy = today.getFullYear();
+					var h = today.getHours();
+					var m = today.getMinutes();
+					var s = today.getSeconds();
+					m = checkTime(m);
+					s = checkTime(s);
+					nowTime = h + ":" + m + ":" + s;
+					if (dd < 10) {
+						dd = '0' + dd
+					}
+					if (mm < 10) {
+						mm = '0' + mm
+					}
+					today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+					tmp = '<i class="fa fa-clock-o" aria-hidden="true"></i> <span class="date">' + today + ' | ' + nowTime +
+						'</span>';
+					document.getElementById("clock").innerHTML = tmp;
+					clocktime = setTimeout("time()", "1000", "Javascript");
+
+					function checkTime(i) {
+						if (i < 10) {
+							i = "0" + i;
+						}
+						return i;
+					}
+				}
+
+				//Thêm Bảng
+				$(document).ready(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+					var actions = $("table td:last-child").html();
+					// Append table with add row form on add new button click
+					$(".add-new").click(function () {
+						$(this).attr("disabled", "disabled");
+						var index = $("table tbody tr:last-child").index();
+						var row = '<tr>' +
+							'<td><input type="text" class="form-control" name="name" id="name" placeholder="Nhập Tên"></td>' +
+							'<td><input type="text" class="form-control" name="gioitinh" id="gioitinh" placeholder="Nhập Giới Tính"></td>' +
+							'<td><input type="text" class="form-control" name="namsinh" id="namsinh" value="" placeholder="Nhập Ngày Sinh"></td>' +
+							'<td><input type="text" class="form-control" name="diachi" id="diachi" value="" placeholder="Nhập Địa Chỉ"></td>' +
+							'<td><input type="text" class="form-control" name="chucvu" id="chucvu" value="" placeholder="Nhập Chức Vụ"></td>' +
+							'<td>' + actions + '</td>' +
+							'</tr>';
+						$("table").append(row);
+						$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+						$('[data-toggle="tooltip"]').tooltip();
+					});
+					//Add Hàng
+					$(document).on("click", ".add", function () {
+						var empty = false;
+						var input = $(this).parents("tr").find('input[type="text"]');
+						input.each(function () {
+							if (!$(this).val()) {
+								$(this).addClass("error");
+								swal("Thông Báo!", "Dữ Liệu Trống Vui Lòng Kiểm Tra", "error");
+								empty = true;
+							} else {
+								$(this).removeClass("error");
+								swal("Thông Báo!", "Bạn Chưa Nhập Dữ Liệu", "error");
+							}
+						});
+						$(this).parents("tr").find(".error").first().focus();
+						if (!empty) {
+							input.each(function () {
+								$(this).parent("td").html($(this).val());
+								swal("Thành Công", "Bạn Đã Cập Nhật Thành Công", "success");
+							});
+							$(this).parents("tr").find(".add, .edit").toggle();
+							$(".add-new").removeAttr("disabled");
+
+						}
+					});
+					// Edit Hàng
+					$(document).on("click", ".edit", function () {
+						$(this).parents("tr").find("td:not(:last-child)").each(function () {
+							$(this).html('<input type="text" class="form-control" value="' + $(this)
+								.text() + '">');
+						});
+						$(this).parents("tr").find(".add, .edit").toggle();
+						$(".add-new").attr("disabled", "disabled");
+					});
+					jQuery(function () {
+						jQuery(".add").click(function () {
+							swal("Thành Công!", "Bạn Đã Sửa Thành Công", "success");
+						});
+					});
+					// Delete Hàng
+					$(document).on("click", ".delete", function () {
+						$(this).parents("tr").remove();
+						swal("Thành Công!", "Bạn Đã Xóa Thành Công", "success");
+						$(".add-new").removeAttr("disabled");
+					});
+				});
+
+				jQuery(function () {
+					jQuery(".cog").click(function () {
+						swal("Sorry!", "Tính Năng Này Chưa Có", "error");
+					});
+				});
+			</script>
+			<!--Tooltip-->
+			<script>
+				$(document).ready(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+				});
+			</script>
 		</div>
 		<!-- Officer End -->
 
