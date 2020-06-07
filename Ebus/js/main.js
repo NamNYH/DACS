@@ -1,0 +1,58 @@
+function openFunction(evt, functionName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(functionName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+
+//thời gian
+        function time() {
+          var today = new Date();
+          var weekday = new Array(7);
+          weekday[0] = "Chủ Nhật";
+          weekday[1] = "Thứ Hai";
+          weekday[2] = "Thứ Ba";
+          weekday[3] = "Thứ Tư";
+          weekday[4] = "Thứ Năm";
+          weekday[5] = "Thứ Sáu";
+          weekday[6] = "Thứ Bảy";
+          var day = weekday[today.getDay()];
+          var dd = today.getDate();
+          var mm = today.getMonth() + 1;
+          var yyyy = today.getFullYear();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+          m = checkTime(m);
+          s = checkTime(s);
+          nowTime = h + ":" + m + ":" + s;
+          if (dd < 10) {
+            dd = '0' + dd
+          }
+          if (mm < 10) {
+            mm = '0' + mm
+          }
+          today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+          tmp = '<i class="fa fa-clock-o" aria-hidden="true"></i> <span class="date">' + today + ' | ' + nowTime +
+            '</span>';
+          document.getElementById("clock").innerHTML = tmp;
+          clocktime = setTimeout("time()", "1000", "Javascript");
+
+          function checkTime(i) {
+            if (i < 10) {
+              i = "0" + i;
+            }
+            return i;
+          }
+        }
